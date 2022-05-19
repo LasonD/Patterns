@@ -1,4 +1,5 @@
 ﻿using ConsoleApp1.CreationalBuilder.Builder;
+using ConsoleApp1.StructuralVirtualProxy.Proxy;
 
 namespace ConsoleApp1.Common
 {
@@ -8,6 +9,9 @@ namespace ConsoleApp1.Common
 
         Task<IEnumerable<Music>> GetAllByCriteria(SearchSpecification specification);
 
-        Task<IEnumerable<Music>> GetAllMusicFromUserCollection(int userId); 
+        Task<IEnumerable<Music>> GetAllMusicFromUserCollection(int userId);
+
+        Task<IMusicComplete> GetCompleteAsync(int musicId);
+        Task<IMusicComplete> GetLightweightMusicComplete(int musicId);
     }
 }
