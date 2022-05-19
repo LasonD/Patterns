@@ -3,7 +3,12 @@ using ConsoleApp1.CreationalBuilder.Builder;
 
 namespace ConsoleApp1.CreationalBuilder
 {
-    public class RecommendationsService
+    public interface IRecommendationsService
+    {
+        Task<IEnumerable<Music>> GetRecommendedMusicForUserAsync(MusicStoreUser user);
+    }
+
+    public class RecommendationsService : IRecommendationsService
     {
         private readonly IMusicRepository _musicRepository;
 
@@ -25,14 +30,17 @@ namespace ConsoleApp1.CreationalBuilder
 
         private static SearchSpecification BuildSearchSpecification(IEnumerable<string> preferredGenres)
         {
-            var specificationBuilder = new SearchSpecificationBuilder();
+            var specificationBuilder = new MusicSearchSpecificationBuilder();
 
             foreach (var genre in preferredGenres)
             {
                 specificationBuilder.AddGenre(genre);
             }
 
-            var searchSpecification = specificationBuilder.Build();
+            var searchSpecification = specificationBuilder
+                .AddLimit(20)
+                .Build();
+
             return searchSpecification;
         }
 
