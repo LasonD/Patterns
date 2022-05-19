@@ -2,6 +2,6 @@
 {
     public interface IMusicStreamStrategy
     {
-        Task<Stream> GetMusicStreamAsync(int musicId);
+        Task<Stream> GetProcessedMusicStreamAsync(Stream musicStream);
     }
 }

@@ -6,24 +6,23 @@ namespace ConsoleApp1.BehavioralStrategy
     public class MusicPlayerController : ControllerBase
     {
         private readonly IUserManager _userManager;
-        private readonly IMusicStreamingStrategyFactory _musicStreamingStrategyFactory;
+        private readonly IMusicPlayerService _palyerService;
 
-        public MusicPlayerController(IUserManager userManager, IMusicStreamingStrategyFactory musicStreamingStrategyFactory)
+        public MusicPlayerController(IUserManager userManager, IMusicPlayerService palyerService)
         {
             _userManager = userManager;
-            _musicStreamingStrategyFactory = musicStreamingStrategyFactory;
+            _palyerService = palyerService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetMusicStream(int musicId)
         {
             var user = _userManager.GetCurrentUser();
 
-            var streamingStrategy = _musicStreamingStrategyFactory.CreateStrategy(user);
+            var processedMusicStream = await _palyerService.StreamMusicBasedOnSubscription(musicId, user.Subscription);
 
-            var musicStream = await streamingStrategy.GetMusicStreamAsync(musicId);
-
-            return File(musicStream, "audio/mpeg");
+            return File(processedMusicStream, "audio/mpeg");
         }
     }
 }

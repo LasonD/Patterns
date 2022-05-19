@@ -4,7 +4,7 @@ namespace ConsoleApp1.BehavioralStrategy.Strategies
 {
     public interface IMusicStreamingStrategyFactory
     {
-        IMusicStreamStrategy CreateStrategy(MusicStoreUser user);
+        IMusicStreamStrategy CreateStrategy(Subscription subscription);
     }
 
     public class MusicStreamingStrategyFactory : IMusicStreamingStrategyFactory
@@ -16,14 +16,14 @@ namespace ConsoleApp1.BehavioralStrategy.Strategies
             this._serviceProvider = serviceProvider;
         }
 
-        public IMusicStreamStrategy CreateStrategy(MusicStoreUser user)
+        public IMusicStreamStrategy CreateStrategy(Subscription subscription)
         {
-            return user.Subscription switch
+            return subscription switch
             {
-                Subscription.None => new DemoMusicStreamStrategy(_serviceProvider.GetRequiredService<IMusicRepository>()),
-                Subscription.Standard => new StandardQualityMusicStreamStrategy(_serviceProvider.GetRequiredService<IMusicRepository>()),
-                Subscription.Advanced => new HighQualityMusicStreamStrategy(_serviceProvider.GetRequiredService<IMusicRepository>()),
-                Subscription.Premium => new StenographySignedMusicStreamStrategy(_serviceProvider.GetRequiredService<IMusicRepository>(), _serviceProvider.GetRequiredService<IStenographyStamper>()),
+                Subscription.None => new DemoMusicStreamStrategy(),
+                Subscription.Standard => new StandardQualityMusicStreamStrategy(),
+                Subscription.Advanced => new HighQualityMusicStreamStrategy(),
+                Subscription.Premium => new StenographySignedMusicStreamStrategy(_serviceProvider.GetRequiredService<IStenographyStamper>()),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

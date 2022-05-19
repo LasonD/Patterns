@@ -1,19 +1,21 @@
 ﻿namespace ConsoleApp1.BehavioralStrategy.Strategies
 {
-    public class StenographySignedMusicStreamStrategy : MusicStreamStrategyBase
+    public class StenographySignedMusicStreamStrategy : HighQualityMusicStreamStrategy
     {
         private readonly IStenographyStamper _stenographyStamper;
 
-        public StenographySignedMusicStreamStrategy(IMusicRepository musicRepository,
-            IStenographyStamper stenographyStamper)
-            : base(musicRepository)
+        public StenographySignedMusicStreamStrategy(IStenographyStamper stenographyStamper)
         {
             _stenographyStamper = stenographyStamper;
         }
 
-        protected override Task<Stream> ProcessMusicStreamAsync(Stream music)
+        public override async Task<Stream> GetProcessedMusicStreamAsync(Stream musicStream)
         {
-            throw new NotImplementedException();
+            var highQualityStream = await base.GetProcessedMusicStreamAsync(musicStream);
+
+            var streamWithStamp = await _stenographyStamper.SignMusicStreamAsync(highQualityStream);
+
+            return streamWithStamp;
         }
     }
 }

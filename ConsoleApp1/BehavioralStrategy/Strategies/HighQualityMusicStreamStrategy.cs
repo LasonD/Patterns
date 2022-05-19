@@ -1,14 +1,10 @@
 ﻿namespace ConsoleApp1.BehavioralStrategy.Strategies
 {
-    public class HighQualityMusicStreamStrategy : MusicStreamStrategyBase
+    public class HighQualityMusicStreamStrategy : IMusicStreamStrategy
     {
-        protected override Task<Stream> ProcessMusicStreamAsync(Stream music)
+        public virtual Task<Stream> GetProcessedMusicStreamAsync(Stream musicStream)
         {
             throw new NotImplementedException();
-        }
-
-        public HighQualityMusicStreamStrategy(IMusicRepository musicRepository) : base(musicRepository)
-        {
         }
     }
 }
