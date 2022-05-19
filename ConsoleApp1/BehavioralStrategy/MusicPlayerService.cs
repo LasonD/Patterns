@@ -15,7 +15,7 @@ namespace ConsoleApp1.BehavioralStrategy
 
         public async Task<Stream> StreamMusicBasedOnSubscription(int musicId, Subscription subscription)
         {
-            var rawMusicStream = await _musicRepository.GetMusicAsync(musicId);
+            var rawMusicStream = await _musicRepository.GetStreamAsync(musicId);
 
             var streamingStrategy = _streamingStrategyFactory.CreateStrategy(subscription);
 
