@@ -1,5 +1,5 @@
-﻿using ConsoleApp1.CreationalBuilder.Builder;
-using ConsoleApp1.StructuralVirtualProxy.Proxy;
+﻿using ConsoleApp1.PlayerService.Proxy;
+using ConsoleApp1.SearchingService.Builder;
 
 namespace ConsoleApp1.Common
 {
